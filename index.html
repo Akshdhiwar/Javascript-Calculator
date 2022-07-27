@@ -1,51 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        background: linear-gradient(to right, #00aaff, #00ff6c);
-        font-family: sans-serif;
-        font-weight: normal;
-      }
-      .calc {
-        display: grid;
-        justify-content: center;
-        align-content: center;
-        grid-template-columns: repeat(4, 100px);
-        grid-template-rows: minmax(120px, auto) repeat(5, 100px);
-        min-height: 100vh;
-      }
-      .span-2 {
-        grid-column: span 2;
-      }
-      .calc > button {
-        cursor: pointer;
-        font-size: 2rem;
-        border: 1px solid white;
-        background-color: rgba(255, 255, 255, 0.75);
-      }
-      .output {
-        grid-column: -1/1;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        justify-content: space-around;
-        padding: 10px;
-        word-wrap: break-word;
-        background-color: rgba(0, 0, 0, 0.9);
-        word-break: break-all;
-      }
-      #currentnum {
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 2.5rem;
-      }
-      #prevNum {
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 1.5rem;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="calc">
@@ -53,7 +9,6 @@
         <div id="prevNum"></div>
         <div id="currentnum"></div>
       </div>
-
       <button class="span-2" data-clear>AC</button>
       <button data-delete>Del</button>
       <button data-operation>÷</button>
@@ -73,80 +28,6 @@
       <button data-number>0</button>
       <button class="span-2" data-equals>=</button>
     </div>
-    <script>
-      const numberbtn = document.querySelectorAll("[data-number]");
-      const operationbtn = document.querySelectorAll("[data-operation]");
-      const deletebtn = document.querySelector("[data-delete]");
-      const equalsbtn = document.querySelector("[data-equals]");
-      const clearbtn = document.querySelector("[data-clear]");
-      let prev = document.getElementById("prevNum");
-      let current = document.getElementById("currentnum");
-      let operation;
-
-      //event listeners
-      numberbtn.forEach((button) => {
-        button.addEventListener("click", () => {
-          shownumber(button.innerHTML);
-        });
-      });
-
-      operationbtn.forEach((button) => {
-        button.addEventListener("click", () => {
-          operation = button.innerHTML;
-          chsOperation();
-        });
-      });
-
-      equalsbtn.addEventListener("click", () => {
-        compute();
-      });
-
-      clearbtn.addEventListener("click", () => {
-        current.innerHTML = "";
-        prev.innerHTML = "";
-        operation = undefined;
-      });
-
-      deletebtn.addEventListener("click", () => {
-        current.innerHTML = current.innerHTML.slice(0, -1);
-        console.log(current.innerHTML);
-      });
-
-      // functions
-      function shownumber(number) {
-        if (number === "." && current.innerHTML.includes(".")) return;
-        current.innerHTML += number;
-      }
-      function chsOperation() {
-        if (current.innerHTML === "") return;
-        if (prev.innerHTML !== "") {
-          compute();
-        }
-        prev.innerHTML = current.innerHTML;
-        current.innerHTML = "";
-        return operation;
-      }
-      function compute() {
-        let comp;
-        let currnum = parseFloat(current.innerHTML);
-        let prevnum = parseFloat(prev.innerHTML);
-        switch (operation) {
-          case "+":
-            comp = prevnum + currnum;
-            break;
-          case "-":
-            comp = prevnum - currnum;
-            break;
-          case "*":
-            comp = prevnum * currnum;
-            break;
-          case "÷":
-            comp = prevnum / currnum;
-            break;
-        }
-        current.innerHTML = comp;
-        prev.innerHTML = "";
-      }
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>
